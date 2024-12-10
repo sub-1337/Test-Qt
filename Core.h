@@ -1,4 +1,5 @@
 #pragma once
+#include "ServWorker.h"
 
 class IAppCore
 {
@@ -25,17 +26,12 @@ public:
 
 class Server : public IServer
 {
+    Worker workerThread_Server;
 public:
     Server() : IServer() {}
-    virtual void Serv_Broadcast() override
-    {
-        // Implementation of broadcast logic
-    }
-    virtual void Serv_AllowConnection() override
-    {
-        // Implementation of connection logic
-    }
-    virtual ~Server() override {}
+    virtual void Serv_Broadcast() override;
+    virtual void Serv_AllowConnection() override;
+    virtual ~Server() override;
 };
 
 class Client : public IClient

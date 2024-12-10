@@ -31,8 +31,10 @@ int main(int argc, char** argv)
 		std::unique_ptr<IServer> srv = std::make_unique<Server>();
 		QtWidgetsClass window(nullptr, std::move(srv));
 		window.show();
-	}	
-
-	return app.exec();
-
+		return app.exec();
+	}
+	else
+	{
+		return app.exec();
+	}
 }

@@ -37,6 +37,9 @@
     <QtMoc Include="QtWidgetsClass.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="ServWorker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="QtWidgetsClass.ui">
