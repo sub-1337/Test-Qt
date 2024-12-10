@@ -19,15 +19,14 @@ public:
         // udpSocket.setSocketOption(QAbstractSocket::;
 
         // Create the message to broadcast
-        QByteArray message = "Hello, this is a broadcast message!";
+        QByteArray message = "Test";
 
         // Send the message to the broadcast address on a specific port (e.g., 12345)
         while (true)
         {
             udpSocket.writeDatagram(message, QHostAddress::Broadcast, 10001);
             QThread::sleep(1);
-        }
-        
+        }       
 
     }
 };
