@@ -56,17 +56,6 @@ public:
         connect(udpSocket.get(), &QUdpSocket::readyRead, this, &WorkerListenUDP::readPendingDatagrams);
 
         //readPendingDatagrams();
-
-        /*QObject::connect(&udpSocket, &QUdpSocket::readyRead, [&udpSocket]() {
-            while (udpSocket->hasPendingDatagrams()) {
-                QByteArray datagram;
-                datagram.resize(udpSocket->pendingDatagramSize());
-                QHostAddress sender;
-                quint16 senderPort;
-
-                udpSocket.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-            }
-            });*/
     }
 private:
     QByteArray message = "beacon";
