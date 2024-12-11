@@ -4,13 +4,14 @@
 #include "ui_QtWidgetsClass.h"
 #include "Core.h"
 
-class QtWidgetsClass : public QWidget
+class QtWidgetsClassServer : public QWidget
 {
 	Q_OBJECT
+protected:
 	std::unique_ptr<IServer> serv;
 public:
-	QtWidgetsClass(QWidget *parent = nullptr, std::unique_ptr<IServer> serv = nullptr);
-	~QtWidgetsClass();
+	QtWidgetsClassServer(QWidget *parent = nullptr, std::unique_ptr<IServer> serv = nullptr);
+	~QtWidgetsClassServer();
 	void onButtonClick();
 
 private:

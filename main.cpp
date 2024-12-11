@@ -11,30 +11,38 @@
 
 #include <memory>
 #include <string>
+#include <iostream>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QPushButton>
-#include "QtWidgetsClass.h"
+#include "QtWidgetsClassServer.h"
+#include "QtWidgetsClassClient.h"
 #include "Core.h"
 
 int main(int argc, char** argv)
 {
-	bool is_server = true;
+	bool isServer = false;
+	
 	if (argc >= 2)
 	{
+		std::cout << "argv[1] " << argv[1] << std::endl;
 		auto str = std::string(argv[1]);
 		if (str == "-c")
-			is_server = true;
+			isServer = true;
 	}
+	
 	QApplication app(argc, argv);
-	if (is_server)
+	if (isServer)
 	{
 		std::unique_ptr<IServer> srv = std::make_unique<Server>();
-		QtWidgetsClass window(nullptr, std::move(srv));
+		QtWidgetsClassServer window(nullptr, std::move(srv));
 		window.show();
 		return app.exec();
 	}
 	else
 	{
+		std::unique_ptr<IClient> cl = std::make_unique<Client>();
+		QtWidgetsClassClient windowClient(nullptr, std::move(cl));
+		windowClient.show();
 		return app.exec();
 	}
 }

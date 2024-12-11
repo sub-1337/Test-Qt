@@ -22,11 +22,12 @@ class IClient : public IAppCore
 {
 public:
     virtual void Client_ConnectServer() = 0;
+    virtual void Client_ListenUDP() = 0;
 };
 
 class Server : public IServer
 {
-    Worker workerThread_Server;
+    WorkerSenderBeacon workerSenderBeacon;
 public:
     Server() : IServer() {}
     virtual void Serv_Broadcast() override;
@@ -36,10 +37,9 @@ public:
 
 class Client : public IClient
 {
+    WorkerListenUDP workerListenUDP;
 public:
-    Client() = default;
-    virtual void Client_ConnectServer() override
-    {
-        // Implementation of connect-to-server logic
-    }
+    Client();
+    virtual void Client_ConnectServer() override;
+    virtual void Client_ListenUDP() override;
 };

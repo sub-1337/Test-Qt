@@ -63,8 +63,15 @@
     <LibraryPath>D:\qt\6.8.1\msvc2022_64\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <LibraryPath>D:\qt\6.8.1\msvc2022_64\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalDependencies>Qt6Core.lib;Qt6Gui.lib
+;Qt6Network.lib;Qt6Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
       <AdditionalDependencies>Qt6Core.lib;Qt6Gui.lib
 ;Qt6Network.lib;Qt6Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -101,16 +108,19 @@
   <ItemGroup>
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="QtWidgetsClass.cpp" />
+    <ClCompile Include="QtWidgetsClassServer.cpp" />
+    <ClCompile Include="QtWidgetsClassClient.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="QtWidgetsClass.h" />
+    <QtMoc Include="QtWidgetsClassServer.h" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="QtWidgetsClass.ui" />
+    <QtUic Include="QtWidgetsClassClient.ui" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
+    <QtMoc Include="QtWidgetsClassClient.h" />
     <QtMoc Include="ServWorker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

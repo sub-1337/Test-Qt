@@ -26,23 +26,32 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QtWidgetsClass.cpp">
+    <ClCompile Include="QtWidgetsClassServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QtWidgetsClassClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="QtWidgetsClass.h">
+    <QtMoc Include="QtWidgetsClassServer.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ServWorker.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="QtWidgetsClassClient.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="QtWidgetsClass.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="QtWidgetsClassClient.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
