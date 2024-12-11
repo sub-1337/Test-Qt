@@ -33,16 +33,47 @@ public:
     }
 };
 
+enum class ClientState
+{
+    none = 0,
+    acceptUDPBeacon,
+    sendMessage,
+    terminating
+};
+
 class WorkerListenUDP : public QThread
 {
     Q_OBJECT
     std::unique_ptr<QUdpSocket> udpSocket;
     const size_t port = 10001;
+    std::atomic<ClientState> currentState = ClientState::acceptUDPBeacon;
+    std::atomic<bool> isInitializedUDPPort = false;
 public:
     virtual void run() override
     {
+        ClientState state = currentState.load();
+        while (state != ClientState::terminating)
+        {
+            state = currentState.load();
+            if (state == ClientState::acceptUDPBeacon)
+            {
+                if (isInitializedUDPPort.load() == false)
+                    AcceptUDP();
+                readPendingDatagrams();
+            }
+            if (state == ClientState::sendMessage)
+            {
+                SendMessage();
+            }
+        }
+        //readPendingDatagrams();
+    }
+private:
+    QByteArray message = "beacon";
+    void AcceptUDP()
+    {
         udpSocket = std::make_unique<QUdpSocket>();
-        
+
         auto resOfBind = udpSocket->bind(QHostAddress::AnyIPv4, port);
 
         if (resOfBind) {
@@ -54,28 +85,24 @@ public:
         }
 
         connect(udpSocket.get(), &QUdpSocket::readyRead, this, &WorkerListenUDP::readPendingDatagrams);
-
-        //readPendingDatagrams();
     }
-private:
-    QByteArray message = "beacon";
 private slots:
     void readPendingDatagrams()
     {
-        while (udpSocket->hasPendingDatagrams()) {
-            QByteArray datagram;
-            datagram.resize(static_cast<int>(udpSocket->pendingDatagramSize()));
-            QHostAddress sender;
-            quint16 senderPort;
+        
+        QByteArray datagram;
+        datagram.resize(static_cast<int>(udpSocket->pendingDatagramSize()));
+        QHostAddress sender;
+        quint16 senderPort;
 
-            // Получение данных
-            udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-            if (datagram == message)
-                std::cout << "Hit" << std::endl;
-            QThread::sleep(1);
-        }
+        // Получение данных
+        udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+        if (datagram == message)
+            currentState.store(ClientState::sendMessage);
+        QThread::sleep(1);
+        
     }
-    void Process()
+    void SendMessage()
     {
 
     }
