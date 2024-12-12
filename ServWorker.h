@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <atomic>
+#include <vector>
+#include <chrono>
 #include <QThread>
 #include <QDebug>
 #include <QtNetwork/QUdpSocket>
@@ -65,12 +67,21 @@ enum class ClientState
     terminating
 };
 
+struct ServersList
+{
+    QHostAddress ipOfServer;
+    std::chrono::steady_clock::time_point lastPingTime;
+    bool isOnline;
+};
+
 class WorkerClient : public QThread
 {
     Q_OBJECT
     std::unique_ptr<QUdpSocket> udpSocket;
     const size_t portUDPBeacon = 10001;
     std::atomic<ClientState> currentState = ClientState::initUDP;
+public:
+    std::vector<ServersList> serversList;
 public:
     virtual void run() override
     {
@@ -126,7 +137,17 @@ private slots:
             // Получение данных
             udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
             if (datagram == message)
+            {
+                for (ServersList entry : serversList)
+                {
+                    if (entry.ipOfServer == sender)
+                    {
+                        return;
+                    }
+                }
+                serversList.push_back(ServersList{ sender, std::chrono::steady_clock::now() , true});
                 currentState.store(ClientState::sendMessage);
+            }               
             
         }        
     }
