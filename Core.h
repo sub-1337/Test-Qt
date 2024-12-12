@@ -27,7 +27,7 @@ public:
 
 class Server : public IServer
 {
-    WorkerSenderBeacon workerSenderBeacon;
+    WorkerServer workerSenderBeacon;
 public:
     Server() : IServer() {}
     virtual void Serv_Broadcast() override;
@@ -37,7 +37,7 @@ public:
 
 class Client : public IClient
 {
-    WorkerListenUDP workerListenUDP;
+    WorkerClient workerListenUDP;
 public:
     Client();
     virtual void Client_ConnectServer() override;
