@@ -106,7 +106,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Core.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QtWidgetsClassServer.cpp" />
     <ClCompile Include="QtWidgetsClassClient.cpp" />
@@ -116,10 +115,8 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="QtWidgetsClass.ui" />
-    <QtUic Include="QtWidgetsClassClient.ui" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core.h" />
     <QtMoc Include="QtWidgetsClassClient.h" />
     <QtMoc Include="ServWorker.h" />
   </ItemGroup>

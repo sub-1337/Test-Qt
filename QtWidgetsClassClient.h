@@ -5,18 +5,17 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QPushButton>
-#include "ui_QtWidgetsClassClient.h"
-#include "Core.h"
+#include "ServWorker.h"
 
 class QtWidgetsClassClient : public QWidget
 {
 	Q_OBJECT
 protected:
-	std::unique_ptr<IClient> client;
+	std::unique_ptr<WorkerClient> client;
     std::unique_ptr<QTableWidget> table;
     bool drawed = false;
 public:
-	QtWidgetsClassClient(QWidget *parent = nullptr, std::unique_ptr<IClient> client = nullptr);
+	QtWidgetsClassClient(QWidget *parent = nullptr, std::unique_ptr<WorkerClient> client = nullptr);
 	~QtWidgetsClassClient();
     void paintEvent(QPaintEvent* event) override {
         Q_UNUSED(event);
@@ -55,7 +54,7 @@ public:
 
 
 private:
-	Ui::QtWidgetsClassClientClass ui;
+	//Ui::QtWidgetsClassClientClass ui;
 public:
     using QWidget::QWidget;
 };

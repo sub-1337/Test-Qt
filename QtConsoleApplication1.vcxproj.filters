@@ -29,9 +29,6 @@
     <ClCompile Include="QtWidgetsClassServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="QtWidgetsClassClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,13 +48,5 @@
     <QtUic Include="QtWidgetsClass.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="QtWidgetsClassClient.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

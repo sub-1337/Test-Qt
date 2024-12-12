@@ -16,7 +16,7 @@
 #include <QtWidgets/QPushButton>
 #include "QtWidgetsClassServer.h"
 #include "QtWidgetsClassClient.h"
-#include "Core.h"
+#include "ServWorker.h"
 
 int main(int argc, char** argv)
 {
@@ -33,14 +33,14 @@ int main(int argc, char** argv)
 	QApplication app(argc, argv);
 	if (isServer)
 	{
-		std::unique_ptr<IServer> srv = std::make_unique<Server>();
+		std::unique_ptr<WorkerServer> srv = std::make_unique<WorkerServer>();
 		QtWidgetsClassServer window(nullptr, std::move(srv));
 		window.show();
 		return app.exec();
 	}
 	else
 	{
-		std::unique_ptr<IClient> cl = std::make_unique<Client>();
+		std::unique_ptr<WorkerClient> cl = std::make_unique<WorkerClient>();
 		QtWidgetsClassClient windowClient(nullptr, std::move(cl));
 		windowClient.show();
 		return app.exec();

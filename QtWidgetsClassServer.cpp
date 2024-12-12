@@ -1,6 +1,6 @@
 #include "QtWidgetsClassServer.h"
-
-QtWidgetsClassServer::QtWidgetsClassServer(QWidget *parent, std::unique_ptr<IServer> serv)
+#include "ServWorker.h"
+QtWidgetsClassServer::QtWidgetsClassServer(QWidget *parent, std::unique_ptr<WorkerServer> serv)
 	: serv(std::move(serv)), QWidget(parent)
 {
 	ui.setupUi(this);
@@ -8,8 +8,10 @@ QtWidgetsClassServer::QtWidgetsClassServer(QWidget *parent, std::unique_ptr<ISer
 }
 
 void QtWidgetsClassServer::onButtonClick() {
-	this->serv->Serv_Broadcast();
+	serv->start();
 }
 
 QtWidgetsClassServer::~QtWidgetsClassServer()
-{}
+{
+	serv->terminate();
+}

@@ -2,15 +2,15 @@
 #include <memory>
 #include <QWidget>
 #include "ui_QtWidgetsClass.h"
-#include "Core.h"
+#include "ServWorker.h"
 
 class QtWidgetsClassServer : public QWidget
 {
 	Q_OBJECT
 protected:
-	std::unique_ptr<IServer> serv;
+	std::unique_ptr<WorkerServer> serv;
 public:
-	QtWidgetsClassServer(QWidget *parent = nullptr, std::unique_ptr<IServer> serv = nullptr);
+	QtWidgetsClassServer(QWidget *parent = nullptr, std::unique_ptr<WorkerServer> serv = nullptr);
 	~QtWidgetsClassServer();
 	void onButtonClick();
 
