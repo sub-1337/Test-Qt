@@ -80,8 +80,8 @@ class WorkerClient : public QThread
     std::unique_ptr<QUdpSocket> udpSocket;
     const size_t portUDPBeacon = 10001;
     std::atomic<ClientState> currentState = ClientState::initUDP;
-public:
     std::vector<ServersList> serversList;
+    std::mutex serverListMutex;
 public:
     virtual void run() override
     {
@@ -138,15 +138,18 @@ private slots:
             udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
             if (datagram == message)
             {
-                for (ServersList entry : serversList)
+                std::lock_guard<std::mutex> lk(serverListMutex);
                 {
-                    if (entry.ipOfServer == sender)
+                    for (ServersList entry : serversList)
                     {
-                        return;
+                        if (entry.ipOfServer == sender)
+                        {
+                            return;
+                        }
                     }
+                    serversList.push_back(ServersList{ sender, std::chrono::steady_clock::now() , true });
+                    currentState.store(ClientState::sendMessage);
                 }
-                serversList.push_back(ServersList{ sender, std::chrono::steady_clock::now() , true});
-                currentState.store(ClientState::sendMessage);
             }               
             
         }        
@@ -154,5 +157,13 @@ private slots:
     void SendMessage()
     {
 
+    }
+public:
+    std::vector<ServersList> getServerList()
+    {
+        std::lock_guard<std::mutex> lk(serverListMutex);
+        {
+            return serversList;
+        }
     }
 };
